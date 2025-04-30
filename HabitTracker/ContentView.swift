@@ -9,53 +9,49 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @Environment(\.modelContext) private var context
+    @Query private var habits: [Habit]
 
     var body: some View {
-        NavigationSplitView {
+        NavigationStack {
             List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                ForEach(habits) { habit in
+                    HStack {
+                        Text("\(habit.emoji) \(habit.name)")
+                        Spacer()
+                        Text("🔥 \(habit.streak)")
+                        Button("✅") {
+                            markHabitDone(habit)
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
                     }
                 }
-                .onDelete(perform: deleteItems)
             }
+            .navigationTitle("My Habits")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
-            }
-        } detail: {
-            Text("Select an item")
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
+                NavigationLink("➕ Add Habit", destination: AddHabitView())
             }
         }
     }
-}
 
-#Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
+    func markHabitDone(_ habit: Habit) {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        
+        if let last = habit.lastCompleted,
+           calendar.isDate(last, inSameDayAs: today) {
+            return 
+        }
+
+        if let last = habit.lastCompleted,
+           let yesterday = calendar.date(byAdding: .day, value: -1, to: today),
+           calendar.isDate(last, inSameDayAs: yesterday) {
+            habit.streak += 1
+        } else {
+            habit.streak = 1
+        }
+
+        habit.lastCompleted = today
+        try? context.save()
+    }
 }
