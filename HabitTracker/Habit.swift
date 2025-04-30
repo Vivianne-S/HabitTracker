@@ -9,16 +9,26 @@ import Foundation
 import SwiftData
 
 @Model
-class Habit {
+final class Habit {
     var name: String
     var emoji: String
     var streak: Int
     var lastCompleted: Date?
-
-    init(name: String, emoji: String, streak: Int = 0, lastCompleted: Date? = nil) {
+    var creationDate: Date
+    var reminderTime: Date?
+    var color: String
+    
+    init(name: String, emoji: String, streak: Int = 0, lastCompleted: Date? = nil, color: String = "2A4D69") {
         self.name = name
         self.emoji = emoji
         self.streak = streak
         self.lastCompleted = lastCompleted
+        self.creationDate = Date()
+        self.color = color
+    }
+    
+    var isCompletedToday: Bool {
+        guard let lastCompleted = lastCompleted else { return false }
+        return Calendar.current.isDateInToday(lastCompleted)
     }
 }
