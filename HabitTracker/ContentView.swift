@@ -62,6 +62,7 @@ struct HabitListView: View {
 struct HabitRowView: View {
     @Environment(\.modelContext) private var context
     let habit: Habit
+    @State private var showingDeleteConfirmation = false
     
     var body: some View {
         HStack(spacing: 16) {
@@ -84,13 +85,30 @@ struct HabitRowView: View {
             
             Spacer()
             
-            Button(action: { markHabitDone(habit) }) {
-                Image(systemName: habit.isCompletedToday ? "checkmark.circle.fill" : "circle")
-                    .resizable()
-                    .frame(width: 28, height: 28)
-                    .foregroundColor(habit.isCompletedToday ? .green : .gray)
+            HStack(spacing: 12) {
+                Button(action: { markHabitDone(habit) }) {
+                    Image(systemName: habit.isCompletedToday ? "checkmark.circle.fill" : "circle")
+                        .resizable()
+                        .frame(width: 28, height: 28)
+                        .foregroundColor(habit.isCompletedToday ? .green : .gray)
+                }
+                .buttonStyle(BorderlessButtonStyle())
+                
+                Button(action: { showingDeleteConfirmation = true }) {
+                    Image(systemName: "trash")
+                        .foregroundColor(.red)
+                }
+                .buttonStyle(BorderlessButtonStyle())
+                .alert("Delete Habit", isPresented: $showingDeleteConfirmation) {
+                    Button("Delete", role: .destructive) {
+                        context.delete(habit)
+                        try? context.save()
+                    }
+                    Button("Cancel", role: .cancel) { }
+                } message: {
+                    Text("Are you sure you want to delete \(habit.name)?")
+                }
             }
-            .buttonStyle(BorderlessButtonStyle())
         }
         .padding(.vertical, 8)
     }
