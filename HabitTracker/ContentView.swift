@@ -7,6 +7,22 @@
 import SwiftUI
 import SwiftData
 
+struct EmptyHabitsView: View {
+    var body: some View {
+        VStack {
+            Text("No Habits Yet")
+                .font(.title2)
+                .fontWeight(.semibold)
+                .padding(.bottom, 8)
+
+            Text("Tap the + button to add your first habit")
+                .foregroundColor(.secondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 40)
+        }
+    }
+}
+
 struct ContentView: View {
     @Environment(\.modelContext) private var context
     @Query private var habits: [Habit]
@@ -38,8 +54,7 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $showingStats) {
-                // StatisticsView(habits: habits)
-                Text("Statistics View Placeholder")
+                StatisticsView(habits: habits)
             }
         }
     }
@@ -125,27 +140,17 @@ struct HabitRowView: View {
            let yesterday = calendar.date(byAdding: .day, value: -1, to: today),
            calendar.isDate(last, inSameDayAs: yesterday) {
             habit.streak += 1
-        } else if !calendar.isDateInToday(habit.lastCompleted ?? Date.distantPast) {
+        } else {
             habit.streak = 1
         }
         
+  
         habit.lastCompleted = today
+        
+        let newCompletion = HabitCompletion(date: today, habit: habit)
+        habit.completions.append(newCompletion)
+        
         try? context.save()
     }
-}
-
-struct EmptyHabitsView: View {
-    var body: some View {
-        VStack {
-            Text("No Habits Yet")
-                .font(.title2)
-                .fontWeight(.semibold)
-                .padding(.bottom, 8)
-            
-            Text("Tap the + button to add your first habit")
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 40)
-        }
-    }
+    
 }

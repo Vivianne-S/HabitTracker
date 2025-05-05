@@ -18,6 +18,9 @@ final class Habit {
     var reminderTime: Date?
     var color: String
     
+    @Relationship(deleteRule: .cascade, inverse: \HabitCompletion.habit)
+    var completions: [HabitCompletion] = []
+    
     init(name: String, emoji: String, streak: Int = 0, lastCompleted: Date? = nil, color: String = "2A4D69") {
         self.name = name
         self.emoji = emoji
@@ -32,3 +35,4 @@ final class Habit {
         return Calendar.current.isDateInToday(lastCompleted)
     }
 }
+
