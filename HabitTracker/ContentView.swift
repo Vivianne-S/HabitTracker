@@ -100,6 +100,11 @@ struct ContentView: View {
         notificationCenter.removeAllPendingNotificationRequests() // Ta bort gamla notiser
 
         for habit in habits {
+            // Skicka ingen notis om vanan redan är markerad som gjord idag
+                if habit.isCompletedToday {
+                    print("Skipping notification for \(habit.name) – already completed today.")
+                    continue
+                }
             let content = UNMutableNotificationContent()
             content.title = "⏰ \(habit.name) Reminder"
             content.body = "Your \(habit.streak)-day streak is about to break! Complete it today. 🔥"
@@ -108,7 +113,7 @@ struct ContentView: View {
             // Schemalägg till kl 23:00 varje dag
             var dateComponents = DateComponents()
             dateComponents.hour = 23
-            dateComponents.minute = 0
+            dateComponents.minute = 00
 
             let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
 
