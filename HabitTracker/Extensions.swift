@@ -4,6 +4,33 @@
 //
 //  Created by Vivianne Sonnerborg on 2025-04-30.
 //
+/*
+Extension för att möjliggöra färginitiering från hex-kod i SwiftUI.
+
+Innehåll:
+- Color(hex:) — en initialiserare för SwiftUI's Color som accepterar en hex-sträng
+
+Stödda format:
+- 3 tecken (RGB, 12-bit), t.ex. "F80"
+- 6 tecken (RGB, 24-bit), t.ex. "FF8800"
+- 8 tecken (ARGB, 32-bit), t.ex. "FFFF8800" (för färg med alfa)
+
+Användning:
+Color(hex: "FF7043") returnerar en Color med färgen #FF7043
+
+Funktionalitet:
+- Tar bort icke-alfanumeriska tecken från hex-strängen
+- Konverterar till RGB- eller ARGB-värden
+- Returnerar motsvarande SwiftUI-färg
+
+Används i:
+- AddHabitView (för färgväljaren)
+- Visuell stil i habit-listor, cirklar och indikatorer
+
+Viktig för:
+- Möjliggör designanpassning med hex-färgkoder
+- Gör färghantering mer intuitiv och återanvändbar i hela appen
+*/
 
 import SwiftUI
 
