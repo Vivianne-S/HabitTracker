@@ -1,3 +1,30 @@
+Core Features:
+Daily Tracking: Mark habits as completed and watch your streaks grow.
+Streak System: Automatically calculates consecutive days of completion.
+Statistics Dashboard: Visual overview of your past 7 days with completion rates and activity circles.
+Smart Reminders: Daily local notifications that help users stay on track.
+Customization: Choose emoji and color for each habit for a more personal experience.
+Local Persistence with SwiftData: All data is stored locally and updates in real time.
+
+
+Tech Stack:
+SwiftUI for modern, declarative UI
+SwiftData for local data storage
+UserNotifications for reminders
+MVVM architecture for maintainability and scalability
+
+
+
+
+
+
+
+
+
+
+
+
+
 HabitTracker App with SwiftUi and Swift Data
 
 Projektlogg - HabitTracker App
@@ -117,18 +144,5 @@ Jag gick igenom hela koden för dagens uppdateringar och lade till kommentarer f
 
 
 
-Core Features:
-Daily Tracking: Mark habits as completed and watch your streaks grow.
-Streak System: Automatically calculates consecutive days of completion.
-Statistics Dashboard: Visual overview of your past 7 days with completion rates and activity circles.
-Smart Reminders: Daily local notifications that help users stay on track.
-Customization: Choose emoji and color for each habit for a more personal experience.
-Local Persistence with SwiftData: All data is stored locally and updates in real time.
 
-
-Tech Stack:
-SwiftUI for modern, declarative UI
-SwiftData for local data storage
-UserNotifications for reminders
-MVVM architecture for maintainability and scalability
 
