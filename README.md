@@ -112,3 +112,23 @@ Jag ändrade utseendet på statistikvyn till en mer minimalistisk och stilren de
 Kommentering och förklaringar i koden
 
 Jag gick igenom hela koden för dagens uppdateringar och lade till kommentarer för att förklara både större och mindre delar av koden. Jag skrev förklaringar för hela funktioner såväl som för specifika rader. Detta gör det lättare att förstå hur koden fungerar och underlättar framtida utveckling och felsökning.
+
+
+
+
+
+Core Features:
+Daily Tracking: Mark habits as completed and watch your streaks grow.
+Streak System: Automatically calculates consecutive days of completion.
+Statistics Dashboard: Visual overview of your past 7 days with completion rates and activity circles.
+Smart Reminders: Daily local notifications that help users stay on track.
+Customization: Choose emoji and color for each habit for a more personal experience.
+Local Persistence with SwiftData: All data is stored locally and updates in real time.
+
+
+Tech Stack:
+SwiftUI for modern, declarative UI
+SwiftData for local data storage
+UserNotifications for reminders
+MVVM architecture for maintainability and scalability
+
